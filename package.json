@@ -1,0 +1,15 @@
+{
+  "name": "minigame-masters",
+  "version": "1.0.0",
+  "description": "A game webpage where users can play minigames against other users.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vite": "^5.4.0"
+  }
+}
