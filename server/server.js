@@ -1,37 +1,47 @@
-require('dotenv').config({ path: '../.env' }); // Load environment variables from .env file
+// Load environment variables from .env file
+require('dotenv').config({ path: '../.env' });
+const express = require('express');
+const { ApolloServer } = require('apollo-server-express');
+const { expressMiddleware } = require('apollo-server-express4');
+const path = require('path');
+const db = require('./config/connection');
 
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
+const { typeDefs, resolvers } = require('./schemas');
 
-const mongoose = require('mongoose'); // Import mongoose for database interactions
-const express = require('express'); // Import express to create the server
-const { ApolloServer } = require('apollo-server-express'); // Import ApolloServer for GraphQL
+const app = express();
+const PORT = process.env.PORT || 5001;
 
-const typeDefs = require('./schema/typeDefs'); // Import type definitions for GraphQL schema
-const resolvers = require('./schema/resolvers'); // Import resolvers for GraphQL schema
-const { User, Game } = require('./models'); // Import models from the index.js file
+// Create an ApolloServer instance with the schema and resolvers
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
-async function startServer() {
-  const app = express(); // Initialize an Express application
-
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-  }); // Create an ApolloServer instance with the schema and resolvers
+const startApolloServer = async () => {
 
   await server.start(); // Ensure the server is started before applying middleware
-  server.applyMiddleware({ app }); // Apply the Apollo GraphQL middleware to the Express app
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
 
-  const PORT = process.env.PORT || 5001; // Define the port from environment variables or default to 5001
-  const MONGODB_URI = process.env.MONGODB_URI; // Get the MongoDB URI from environment variables
+  app.use('/graphql', expressMiddleware(server, {
+    // context: authMiddleware
+  }));
 
-  mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }); // Connect to the MongoDB database
+  // if we're in production, serve client/build as static assets
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')));
 
-  app.listen({ port: PORT }, () =>
-    console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`)
-  ); // Start the server and log the URL
-}
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    });
+  }
 
-startServer(); // Call the function to start the server
+  db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}`);
+      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+    });
+  });
+};
+
+startApolloServer(); // Call the function to start the server
