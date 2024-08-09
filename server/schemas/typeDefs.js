@@ -9,8 +9,6 @@ const typeDefs = `
   type Query {
     getUser(id: ID!): User
     getUsers: [User]
-    getGame(id: ID!): Game
-    getGames: [Game]
   }
 
   type Mutation {

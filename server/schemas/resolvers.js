@@ -1,4 +1,4 @@
-const { User, Game } = require('../models'); // Import the models
+const { User } = require('../models'); // Import the models
 
 const resolvers = {
   Query: {
