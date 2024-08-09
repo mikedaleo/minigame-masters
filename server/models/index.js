@@ -1,7 +1,4 @@
-const User = require('./User'); // Import the User model
-const Game = require('./Game'); // Import the Game model
+const User = require('./User'); 
+const Game = require('./Game'); 
 
-module.exports = {
-  User,
-  Game,
-}; // Export the models
+module.exports = { User, Game }; 
