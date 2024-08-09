@@ -7,6 +7,7 @@ import Games from './pages/Games';
 import Profile from './pages/Profile';
 import Error from './pages/Error';
 import Leaderboard from './pages/Leaderboard';
+import Forms from './components/Form/forms.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       }, {
         path: '/leaderboard',
         element: <Leaderboard />
+      },
+       {
+        path: '/forms',
+        element: <Forms />
       }
     ],
   },
