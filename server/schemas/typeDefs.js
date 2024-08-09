@@ -1,26 +1,9 @@
-const { gql } = require('apollo-server-express'); // Import gql from Apollo Server to define schema
-
-const typeDefs = gql`
-  type Bet {
-    gameId: String!
-    unitsWagered: Int!
-    result: String!
-    payout: Int!
-  }
-
+const typeDefs = `
   type User {
-    id: ID!
+    _id: ID!
     username: String!
     email: String!
     units: Int!
-    bets: [Bet]
-  }
-
-  type Game {
-    id: ID!
-    name: String!
-    description: String!
-    rules: String!
   }
 
   type Query {
@@ -32,9 +15,7 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
-    placeBet(userId: ID!, gameId: String!, unitsWagered: Int!, result: String!, payout: Int!): User
-    createGame(name: String!, description: String!, rules: String!): Game
   }
 `;
 
-module.exports = typeDefs; // Export the type definitions
+module.exports = typeDefs;
