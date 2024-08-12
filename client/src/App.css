@@ -12,6 +12,12 @@ body{
   color: var(--high-contrast)
 }
 /* Form containers */
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .form{
   display: flex;
   flex-direction: column;
@@ -20,6 +26,9 @@ body{
 }
 .form *{
   margin: 3px 0px;
+}
+.sign-up-btn{
+align-items: center;
 }
 /* Header Style */
 header{
