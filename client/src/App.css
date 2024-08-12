@@ -21,3 +21,34 @@ body{
 .form *{
   margin: 3px 0px;
 }
+/* Header Style */
+header{
+  display: flex;
+  justify-content: center;
+}
+/* Footer Style */
+footer{
+  display: flex;
+  justify-content: center;
+}
+/* HomePage Style */
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
+/* Links Styles */
+#links{
+  display: flex;
+  justify-content: space-evenly;
+}
+#links a{
+  color: var(--high-contrast);
+  text-decoration: none;
+}
+#links a:hover{
+  color: var(--grey);
+  background-color: var(--contrast);
+  transform: scale(1.5);
+}
