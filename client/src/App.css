@@ -1,6 +1,6 @@
 /* Color Theme */
 :root {
-  --primary: #3F334D;
+  --primary: black;
   --secondary: #574B60;
   --grey: #222222;
   --contrast: #EAF0CE;
@@ -9,7 +9,8 @@
 /* Full page */
 body{
   background-color: var(--primary);
-  color: var(--high-contrast)
+  color: var(--high-contrast);
+  text-align: center;
 }
 /* Form containers */
 .container{
@@ -33,7 +34,14 @@ align-items: center;
 /* Header Style */
 header{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+#logo {
+  display: flex;
+}
+#logo img {
+  width: 200px;
 }
 /* Footer Style */
 footer{
@@ -50,14 +58,13 @@ footer{
 /* Links Styles */
 #links{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around
 }
 #links a{
   color: var(--high-contrast);
   text-decoration: none;
+  transition: transform .5s loop;
 }
 #links a:hover{
-  color: var(--grey);
-  background-color: var(--contrast);
-  transform: scale(1.5);
+  transform: translateY(-2px);
 }

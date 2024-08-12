@@ -3,7 +3,9 @@ import React from 'react';
 function Header() {
     return (
         <header>
-            <h1 style={{ color: 'blue', fontWeight: 'bold' }}>MINIGAME MASTERS</h1>
+            <div id="logo">
+            <img src="/logo.png" alt="Minigame Masters Logo" />
+          </div>
         </header>
     );
 }
