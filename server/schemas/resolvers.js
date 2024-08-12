@@ -11,8 +11,20 @@ const resolvers = {
   },
   Mutation: {
     createUser: async (parent, { username, email, password }) => {
-      const user = new User({ username, email, password, units: 100 });
+      const user = new User({ username, email, password, coins: 100 });
       return await user.save(); // Create and save a new user
+    },
+    updateCoins: async (parent, { userId, coins }) => {
+      return User.findOneAndUpdate(
+        {_id: userId },
+        {
+          $addToSet: { coins: coins },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
     },
   },
 };
