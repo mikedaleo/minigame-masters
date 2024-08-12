@@ -7,7 +7,7 @@ import Games from './pages/Games';
 import Profile from './pages/Profile';
 import Error from './pages/Error';
 import Leaderboard from './pages/Leaderboard';
-import Forms from './components/Form/forms.jsx';
+import SignUp from './components/Form/sign-up.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
         element: <Leaderboard />
       },
        {
-        path: '/forms',
-        element: <Forms />
+        path: '/signup',
+        element: <SignUp />
       }
     ],
   },
