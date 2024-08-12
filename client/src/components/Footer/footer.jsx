@@ -1,7 +1,10 @@
 function Footer() {
     return (
         <footer>
-            <h1 style={{ color: 'blue', fontWeight: 'bold' }}>MINIGAME MASTERS FOOTER</h1>
+            <div>
+                <p>Thank You For Playing!</p>
+                <p>Created By: Noah Manno, Christopher Giordano, Christopher Josephs, Michael Daleo, and Phil Choi</p>
+                </div>
         </footer>
     );
 }
