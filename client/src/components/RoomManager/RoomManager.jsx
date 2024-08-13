@@ -46,15 +46,19 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer }) => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
-        placeholder="Enter room name"
-      />
-      <button onClick={createRoom}>Create Room</button>
-      <button onClick={joinRoom}>Join Room</button>
+    <div className='container'>
+      <div className='room-container'>
+        <input
+          type="text"
+          value={roomName}
+          onChange={(e) => setRoomName(e.target.value)}
+          placeholder="Enter room name"
+        />
+        <div>
+          <button onClick={createRoom} className='btn'>Create Room</button>
+          <button onClick={joinRoom} className='btn'>Join Room</button>
+        </div>
+      </div>
     </div>
   );
 };
