@@ -1,33 +1,30 @@
-// Load environment variables from .env file
+// server.js
 require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-// const { expressMiddleware } = require('apollo-server-express4');
 const path = require('path');
+const http = require('http');
 const db = require('./config/connection');
-
 const { typeDefs, resolvers } = require('./schemas');
+const { setupSocket } = require('./tictactoeserver'); // Import the function to set up Socket.IO
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = 3001;
+
+// Create an HTTP server
+const server = http.createServer(app);
 
 // Create an ApolloServer instance with the schema and resolvers
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
 });
 
-const startApolloServer = async () => {
+const startServer = async () => {
+  await apolloServer.start(); // Ensure the server is started before applying middleware
+  apolloServer.applyMiddleware({ app });
 
-  await server.start(); // Ensure the server is started before applying middleware
-  app.use(express.urlencoded({ extended: false }));
-  app.use(express.json());
-
-  // app.use('/graphql', expressMiddleware(server, {
-  //   // context: authMiddleware
-  // }));
-
-  // if we're in production, serve client/build as static assets
+  // Serve static assets in production
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
 
@@ -36,12 +33,17 @@ const startApolloServer = async () => {
     });
   }
 
+  // Set up Socket.IO
+  setupSocket(server);
+
   db.once('open', () => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`API server running on port ${PORT}`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+      console.log(`Socket.IO server running on port ${PORT}`);
     });
   });
 };
 
-startApolloServer(); // Call the function to start the server
+startServer();
+
