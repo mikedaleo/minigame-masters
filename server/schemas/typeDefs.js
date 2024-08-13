@@ -3,7 +3,7 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
-    units: Int!
+    coins: Int!
   }
 
   type Query {
@@ -13,6 +13,7 @@ const typeDefs = `
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
+    updateCoins(userId: ID!, coins: Int!): User
   }
 `;
 
