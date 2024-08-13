@@ -9,7 +9,7 @@ const { typeDefs, resolvers } = require('./schemas');
 const { setupSocket } = require('./tictactoeserver'); // Import the function to set up Socket.IO
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Create an HTTP server
 const server = http.createServer(app);
