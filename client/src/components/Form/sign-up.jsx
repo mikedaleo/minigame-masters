@@ -30,32 +30,43 @@ function SignUp() {
 
     return (
         <div className="container">
-            {currentForm === 'login' ? (<div className="form-container">
-                <form className='form sign-up'>
-                    <h2>Create Account</h2>
-                    <span>Register with E-mail</span>
-                    <input value={email} onChange={handleInputChange} name="email" type="email" placeholder='email'></input>
-                    <input value={userName} onChange={handleInputChange} name="userName" type="username" placeholder='username'></input>
-                    <input value={password} onChange={handleInputChange} name="password" type="password" placeholder='password'></input>
-                    <button type="submit">Sign Up</button>
-                </form>
-            </div>) : (
-        <div className="container">
-            <div className="form-container">
-                <form className='form login'>
-                    <h2>Login</h2>
-                    <span>Login with Username</span>
-                    <input name="userName" type="username" placeholder='username'></input>
-                    <input name="password" type="password" placeholder='password'></input>
-                    <button type="submit">Login</button>
-                    
-                </form>
-            </div>
-        </div>
-    )}
-            <button onClick={toggleForm} className="toggle-btn">
-                {currentForm === 'login' ? 'Already have an account?' : "Don't have an account?"}
-            </button>
+            {currentForm === 'login' ? (
+                <>
+                    <div className='container'>
+                        <div className="form-container">
+                            <form className='form sign-up'>
+                                <h2>Create Account</h2>
+                                <span>Register with E-mail</span>
+                                <input value={email} onChange={handleInputChange} name="email" type="email" placeholder='email'></input>
+                                <input value={userName} onChange={handleInputChange} name="userName" type="username" placeholder='username'></input>
+                                <input value={password} onChange={handleInputChange} name="password" type="password" placeholder='password'></input>
+                                <button type="submit" className='btn'>Sign Up</button>
+                            </form>
+                        </div>
+                        <button onClick={toggleForm} className="toggle-btn">
+                            {currentForm === 'login' ? 'Already have an account?' : "Don't have an account?"}
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="container">
+                        <div className="form-container">
+                            <form className='form login'>
+                                <h2>Login</h2>
+                                <span>Login with Username</span>
+                                <input name="userName" type="username" placeholder='username'></input>
+                                <input name="password" type="password" placeholder='password'></input>
+                                <button type="submit" className='btn'>Login</button>
+
+                            </form>
+                        </div>
+                        <button onClick={toggleForm} className="toggle-btn">
+                            {currentForm === 'login' ? 'Already have an account?' : "Don't have an account?"}
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
 
     )

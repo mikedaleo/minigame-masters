@@ -1,7 +1,7 @@
 /* Color Theme */
 :root {
-  --primary: black;
-  --secondary: #574B60;
+  --primary: #121212;
+  --secondary: #00f3f3;
   --grey: #222222;
   --contrast: #EAF0CE;
   --high-contrast: #f6f8eb;
@@ -18,6 +18,7 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 25px 0px;
 }
 .form{
   display: flex;
@@ -25,11 +26,27 @@ body{
   align-items: center;
   margin: 20px 0px;
 }
-.form *{
-  margin: 3px 0px;
+form input{
+  background-color: var(--high-contrast);
+  border: none;
+  margin: 8px 0px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  width: 100%;
 }
-.sign-up-btn{
-align-items: center;
+.toggle-btn,
+.btn{
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.toggle-btn:hover,
+.btn:hover{
+  transform: scale(1.1);
 }
 /* Header Style */
 header{
