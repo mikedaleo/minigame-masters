@@ -25,6 +25,8 @@ const setupSocket = (server) => {
       }
     });
 
+    // TEST
+
     socket.on('joinRoom', (roomName) => {
       if (rooms[roomName]) {
         if (rooms[roomName].players.length < 2) {
