@@ -22,10 +22,11 @@ const Games = () => {
           player={player}
           setGameStatus={setGameStatus}
         />
+      ) : (
+        <h3>{gameStatus}</h3>
       )}
-      <h3>{gameStatus}</h3>
     </div>
   );
-};
+}
 
 export default Games;
