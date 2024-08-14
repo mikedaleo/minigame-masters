@@ -7,9 +7,8 @@ const Games = () => {
   const [currentRoom, setCurrentRoom] = useState('');
   const [player, setPlayer] = useState(null);
   const [gameStatus, setGameStatus] = useState('Enter a room to start playing...');
-  const [playerCount, setPlayerCount] = useState(0);
+  // const [playerCount, setPlayerCount] = useState(0);
 
-  const isGameStarted = gameStatus === 'Game started!' && playerCount === 2;
   return (
     <div>
       <h1>Tic-Tac-Toe</h1>
@@ -19,7 +18,7 @@ const Games = () => {
         setPlayer={setPlayer}
         setPlayerCount={setPlayerCount}
       />
-      {isGameStarted ? (
+      {gameStatus === 'Game started!'? (
         <Game
           currentRoom={currentRoom}
           player={player}
