@@ -33,6 +33,12 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
     };
   }, [currentRoom, setGameStatus]);
 
+  useEffect(() => {
+    if (player) {
+      console.log(`Player assigned: ${player}`);
+    }
+  }, [player]);
+
   const handleClick = (index) => {
     if (!player || !gameStarted || board[index] || calculateWinner(board) || (player !== (xIsNext ? 'X' : 'O'))) return;
 
