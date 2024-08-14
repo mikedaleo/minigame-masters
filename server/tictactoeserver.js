@@ -43,6 +43,7 @@ const setupSocket = (server) => {
         io.to(socket.id).emit('roomError', 'Room does not exist');
       }
     });
+    
 
     socket.on('makeMove', (roomName, move) => {
       if (rooms[roomName] && rooms[roomName].players.includes(socket.id)) {
@@ -50,7 +51,14 @@ const setupSocket = (server) => {
         if (rooms[roomName].board[index] === null) {
           rooms[roomName].board[index] = player;
           io.to(roomName).emit('moveMade', move);
-          // Check for a winner or draw here and emit the result if necessary
+          
+          // Check for a winner or draw
+          const winner = calculateWinner(rooms[roomName].board);
+          if (winner) {
+            io.to(roomName).emit('gameOver', { winner });
+          } else if (rooms[roomName].board.every(cell => cell !== null)) {
+            io.to(roomName).emit('gameOver', { winner: 'Draw' });
+          }
         }
       }
     });

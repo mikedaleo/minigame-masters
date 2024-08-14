@@ -4,6 +4,7 @@ import socket from '../../socket';
 const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
     if (!currentRoom) return;
@@ -11,6 +12,7 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
     socket.on('gameStart', () => {
       setBoard(Array(9).fill(null));
       setXIsNext(true);
+      setGameStarted(true);
       setGameStatus('Game started!');
     });
 
@@ -30,7 +32,7 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
   }, [currentRoom, setGameStatus]);
 
   const handleClick = (index) => {
-    if (!player || board[index] || calculateWinner(board) || (player !== (xIsNext ? 'X' : 'O'))) return;
+    if (!player || !gameStarted || board[index] || calculateWinner(board) || (player !== (xIsNext ? 'X' : 'O'))) return;
 
     const currentPlayer = xIsNext ? 'X' : 'O';
     setBoard((prevBoard) => {

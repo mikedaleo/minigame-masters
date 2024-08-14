@@ -24,11 +24,16 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer }) => {
       setGameStatus(error);
     });
 
+    socket.on('gameStart', () => {
+      setGameStatus('Game started!');
+    });
+
     return () => {
       socket.off('playerRole');
       socket.off('roomCreated');
       socket.off('roomJoined');
       socket.off('roomError');
+      socket.off('gameStart');
     };
   }, [setCurrentRoom, setGameStatus, setPlayer]);
 
