@@ -9,6 +9,8 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
   useEffect(() => {
     if (!currentRoom) return;
 
+    socket.emit('joinRoom', currentRoom);
+
     socket.on('gameStart', () => {
       setBoard(Array(9).fill(null));
       setXIsNext(true);
