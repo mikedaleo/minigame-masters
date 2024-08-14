@@ -7,7 +7,7 @@ const Games = () => {
   const [currentRoom, setCurrentRoom] = useState('');
   const [player, setPlayer] = useState(null);
   const [gameStatus, setGameStatus] = useState('Enter a room to start playing...');
-  // const [playerCount, setPlayerCount] = useState(0);
+  const [playerCount, setPlayerCount] = useState(0);
 
   return (
     <div>
@@ -18,7 +18,7 @@ const Games = () => {
         setPlayer={setPlayer}
         setPlayerCount={setPlayerCount}
       />
-      {gameStatus === 'Game started!'? (
+      {gameStatus === 'Game started!' ? (
         <Game
           currentRoom={currentRoom}
           player={player}
