@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import socket from '../../socket';
 
-const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer }) => {
+const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer, setPlayerCount }) => {
   const [roomName, setRoomName] = useState('');
 
   useEffect(() => {
@@ -15,9 +15,14 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer }) => {
       setGameStatus(`Room ${room} created. Waiting for another player to join...`);
     });
 
-    socket.on('roomJoined', (room) => {
+    socket.on('roomJoined', ({ room, playerCount }) => {
       setCurrentRoom(room);
-      setGameStatus(`Joined room ${room}. Waiting for another player to join...`);
+      setPlayerCount(playerCount); // Set player count
+      if (playerCount === 2) {
+        setGameStatus('Game started!');
+      } else {
+        setGameStatus(`Joined room ${room}. Waiting for another player to join...`);
+      }
     });
 
     socket.on('roomError', (error) => {
@@ -35,7 +40,7 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer }) => {
       socket.off('roomError');
       socket.off('gameStart');
     };
-  }, [setCurrentRoom, setGameStatus, setPlayer]);
+  }, [setCurrentRoom, setGameStatus, setPlayer, setPlayerCount]);
 
   const createRoom = () => {
     console.log(roomName)

@@ -43,6 +43,10 @@ const setupSocket = (server) => {
         io.to(socket.id).emit('roomError', 'Room does not exist');
       }
     });
+
+    socket.on('gameStart', (roomName) => {
+      io.to(roomName).emit('gameStart');
+    });
     
 
     socket.on('makeMove', (roomName, move) => {
