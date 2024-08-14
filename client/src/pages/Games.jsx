@@ -16,7 +16,7 @@ const Games = () => {
         setGameStatus={setGameStatus}
         setPlayer={setPlayer}
       />
-      {currentRoom && player && (
+      {currentRoom && player ? (
         <Game
           currentRoom={currentRoom}
           player={player}
