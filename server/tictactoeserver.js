@@ -1,4 +1,3 @@
-// tictactoeserver.js
 const socketIo = require('socket.io');
 
 const setupSocket = (server) => {
@@ -16,7 +15,11 @@ const setupSocket = (server) => {
 
     socket.on('createRoom', (roomName) => {
       if (!rooms[roomName]) {
-        rooms[roomName] = { players: [], board: Array(9).fill(null) };
+        rooms[roomName] = {
+          players: [], 
+          board: Array(9).fill(null),
+          playerRoles: {}  // Added to store player roles
+        };
         socket.join(roomName);
         io.to(socket.id).emit('roomCreated', roomName);
         console.log(`Room ${roomName} created`);
@@ -25,16 +28,23 @@ const setupSocket = (server) => {
       }
     });
 
-    // TEST
-
     socket.on('joinRoom', (roomName) => {
       if (rooms[roomName]) {
         if (rooms[roomName].players.length < 2) {
+          const isFirstPlayer = rooms[roomName].players.length === 0;
           rooms[roomName].players.push(socket.id);
           socket.join(roomName);
-          io.to(socket.id).emit('roomJoined', roomName);
+
+          // Assign player role
+          const role = isFirstPlayer ? 'X' : 'O';
+          rooms[roomName].playerRoles[socket.id] = role;
+
+          io.to(socket.id).emit('roomJoined', { roomName, role });
+
+          io.to(roomName).emit('playerRole', rooms[roomName].playerRoles);
+          
           if (rooms[roomName].players.length === 2) {
-            io.to(roomName).emit('gameStart');
+            io.to(roomName).emit('gameStart', { roles: rooms[roomName].playerRoles });
           }
         } else {
           io.to(socket.id).emit('roomError', 'Room is full');
@@ -43,11 +53,6 @@ const setupSocket = (server) => {
         io.to(socket.id).emit('roomError', 'Room does not exist');
       }
     });
-
-    socket.on('gameStart', (roomName) => {
-      io.to(roomName).emit('gameStart');
-    });
-    
 
     socket.on('makeMove', (roomName, move) => {
       if (rooms[roomName] && rooms[roomName].players.includes(socket.id)) {
@@ -70,9 +75,44 @@ const setupSocket = (server) => {
     socket.on('disconnect', () => {
       console.log('Client disconnected');
       // Clean up room data if needed
+      for (const [roomName, roomData] of Object.entries(rooms)) {
+        const playerIndex = roomData.players.indexOf(socket.id);
+        if (playerIndex !== -1) {
+          roomData.players.splice(playerIndex, 1);
+          delete roomData.playerRoles[socket.id];
+          if (roomData.players.length === 0) {
+            delete rooms[roomName]; // Delete room if no players
+          } else {
+            // Notify remaining player(s) about the disconnection
+            io.to(roomName).emit('playerDisconnected');
+          }
+          break;
+        }
+      }
     });
   });
 };
 
+const calculateWinner = (squares) => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+};
+
 module.exports = { setupSocket };
+
 

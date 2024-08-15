@@ -11,9 +11,10 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
 
     socket.emit('joinRoom', currentRoom);
 
-    socket.on('gameStart', () => {
+    socket.on('gameStart', ({ roles }) => {
       setBoard(Array(9).fill(null));
-      setXIsNext(true);
+      // Determine who starts based on server's decision
+      setXIsNext(roles[Object.keys(roles)[0]] === 'X');
       setGameStarted(true);
       setGameStatus('Game started!');
     });
@@ -33,6 +34,12 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
     };
   }, [currentRoom, setGameStatus]);
 
+  useEffect(() => {
+    if (player) {
+      console.log(`Player assigned: ${player}`);
+    }
+  }, [player]);
+
   const handleClick = (index) => {
     if (!player || !gameStarted || board[index] || calculateWinner(board) || (player !== (xIsNext ? 'X' : 'O'))) return;
 
@@ -43,7 +50,7 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
       return newBoard;
     });
     socket.emit('makeMove', currentRoom, { index, player: currentPlayer });
-    setXIsNext(!xIsNext);
+    setXIsNext(!xIsNext); // Toggle the turn
   };
 
   const winner = calculateWinner(board);
@@ -91,3 +98,4 @@ const calculateWinner = (squares) => {
 };
 
 export default TicTacToe;
+
