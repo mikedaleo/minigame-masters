@@ -1,26 +1,17 @@
 import { useState } from 'react';
-
 import Auth from '../../utils/auth';
-import { createUser, loginUser } from '../../utils/API';
+// import { CREATE_USER } from '../../utils/mutations'
+// import { useMutation } from '@apollo/client';
 
 function SignUp() {
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
     const [currentForm, setCurrentForm] = useState('login');
 
-    const handleInputChange = (e) => {
-        // Getting the value and name of the input which triggered the change
-        const { target } = e;
-        const inputType = target.name;
-        const inputValue = target.value;
+    // const [createUser, {error, data} ] = useMutation(CREATE_USER);
 
-        // Based on the input type, we set the state of either email, username, and password
-        if (inputType === 'email') {
-            setEmail(inputValue);
-        } else if (inputType === 'userName') {
-            setUserName(inputValue);
-        } else {
-            setPassword(inputValue);
-        }
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+      setUserFormData({ ...userFormData, [name]: value });
     };
 
     const handleSignupSubmit = async (event) => {
@@ -37,10 +28,10 @@ function SignUp() {
           const { data } = await createUser({
             variables: { ...userFormData },
           });
-          
+          console.log(data);
           Auth.login(data.createUser.token);
-        } catch (err) {
-          console.error(err);
+        } catch (error) {
+          console.error(error);
           setShowAlert(true);
         }
         setUserFormData({
