@@ -30,7 +30,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    units: { type: Number, default: 100 },
+    coins: { type: Number, default: 100 },
   });
 
 // hash user password
