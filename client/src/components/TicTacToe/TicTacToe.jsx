@@ -19,7 +19,7 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
     });
 
     socket.on('moveMade', (move) => {
-      const newBoard = [...prevBoard];
+      const newBoard = [ ...board ];
       newBoard[move.index] = move.player;
       setBoard(newBoard);
       setXIsNext(move.player === 'O'); // Toggle next player
@@ -43,7 +43,7 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
 
     const currentPlayer = xIsNext ? 'X' : 'O';
 
-    const newBoard = [...prevBoard];
+    const newBoard = [ ...board ];
     newBoard[index] = currentPlayer;
 
     socket.emit('makeMove', currentRoom, { index, player: currentPlayer });
