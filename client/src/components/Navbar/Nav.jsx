@@ -1,20 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import React from 'react';
 
-
 function Nav() {
-    return (
-        <nav>
-        <div id="links">
-          <Link to="/">Home</Link>
-          <Link to="/games">Games</Link>
-          <Link to="/leaderboard">Leaderboard</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/">Logout</Link>
-        </div>
-      </nav>
-    );
-  }
+  const location = useLocation();
 
-  export default Nav;
+  // Function to determine if the link is active
+  const isActive = (path) => location.pathname === path;
+
+  return (
+    <nav>
+      <div id="links">
+        <Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link>
+        <Link to="/games" className={isActive('/games') ? 'active' : ''}>Games</Link>
+        <Link to="/leaderboard" className={isActive('/leaderboard') ? 'active' : ''}>Leaderboard</Link>
+        <Link to="/signup" className={isActive('/signup') ? 'active' : ''}>Sign Up</Link>
+        <Link to="/profile" className={isActive('/profile') ? 'active' : ''}>Profile</Link>
+        <Link to="/logout" className={isActive('/logout') ? 'active' : ''}>Logout</Link>
+      </div>
+    </nav>
+  );
+}
+
+export default Nav;
