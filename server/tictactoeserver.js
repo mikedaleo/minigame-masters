@@ -18,7 +18,7 @@ const setupSocket = (server) => {
         rooms[roomName] = {
           players: [], 
           board: Array(9).fill(null),
-          playerRoles: {}  // Added to store player roles
+          playerRoles: {}
         };
         socket.join(roomName);
         io.to(socket.id).emit('roomCreated', roomName);
@@ -30,27 +30,23 @@ const setupSocket = (server) => {
 
     socket.on('joinRoom', (roomName) => {
       if (rooms[roomName]) {
-        if (rooms[roomName].players.length < 2) {
-          const isFirstPlayer = rooms[roomName].players.length === 0;
-          rooms[roomName].players.push(socket.id);
+        const room = rooms[roomName];
+        if (room.players.length < 2) {
+          room.players.push(socket.id);
           socket.join(roomName);
-
-          // Assign player role
-          const role = isFirstPlayer ? 'X' : 'O';
-          rooms[roomName].playerRoles[socket.id] = role;
-
-          io.to(socket.id).emit('roomJoined', { roomName, role });
-
-          io.to(roomName).emit('playerRole', rooms[roomName].playerRoles);
-          
-          if (rooms[roomName].players.length === 2) {
-            io.to(roomName).emit('gameStart', { roles: rooms[roomName].playerRoles });
+          socket.emit('roomJoined', roomName);
+          if (room.players.length === 2) {
+            const [player1, player2] = room.players;
+            io.to(player1).emit('playerRole', 'X');
+            io.to(player2).emit('playerRole', 'O');
+            io.to(roomName).emit('gameStart');
           }
+          console.log(`Player joined room ${roomName}`);
         } else {
-          io.to(socket.id).emit('roomError', 'Room is full');
+          socket.emit('roomError', 'Room is full');
         }
       } else {
-        io.to(socket.id).emit('roomError', 'Room does not exist');
+        socket.emit('roomError', 'Room does not exist');
       }
     });
 

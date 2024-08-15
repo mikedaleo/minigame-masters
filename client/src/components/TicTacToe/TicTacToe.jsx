@@ -30,11 +30,11 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
 
     return () => {
       socket.off('gameStart');
-      socket.off('moveMade');
     };
   }, [currentRoom, setGameStatus]);
 
   useEffect(() => {
+    console.log(player)
     if (player) {
       console.log(`Player assigned: ${player}`);
     }
