@@ -1,6 +1,7 @@
 // socket.js
 import io from 'socket.io-client';
 
-const socket = io('https://minigame-masters.onrender.com'); // Connect to backend
+
+const socket = io('http://localhost:3001'); // Connect to backend
 
 export default socket;

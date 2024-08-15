@@ -1,9 +1,9 @@
-const socketIo = require('socket.io');
+const { Server } = require('socket.io');
 
 const setupSocket = (server) => {
-  const io = socketIo(server, {
+  const io = new Server(server, {
     cors: {
-      origin: "https://minigame-masters.onrender.com/", // Allow your front-end origin
+      origin: ["https://minigame-masters.onrender.com/", 'http://localhost:3000'], // Allow your front-end origin
       methods: ["GET", "POST"],
     }
   });
