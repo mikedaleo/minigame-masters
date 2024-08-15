@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Nav from './components/Navbar/Nav';
+// import Nav from './components/Navbar/Nav';
 import Footer from './components/Footer/footer';
 import Header from './components/Header/header';
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
@@ -30,7 +30,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Header />
-      <Nav />
+      {/* <Nav /> */}
       <Outlet />
       <Footer />
     </ApolloProvider>
