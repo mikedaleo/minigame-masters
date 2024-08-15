@@ -4,7 +4,7 @@ import socket from '../../socket';
 const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
-  const [gameStarted, setGameStarted] = useState(false);
+
 
   useEffect(() => {
     if (!currentRoom) return;
@@ -15,16 +15,13 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
       setBoard(Array(9).fill(null));
       // Determine who starts based on server's decision
       setXIsNext(roles[Object.keys(roles)[0]] === 'X');
-      setGameStarted(true);
       setGameStatus('Game started!');
     });
 
     socket.on('moveMade', (move) => {
-      setBoard((prevBoard) => {
-        const newBoard = [...prevBoard];
-        newBoard[move.index] = move.player;
-        return newBoard;
-      });
+      const newBoard = [...prevBoard];
+      newBoard[move.index] = move.player;
+      setBoard(newBoard);
       setXIsNext(move.player === 'O'); // Toggle next player
     });
 
@@ -41,15 +38,19 @@ const TicTacToe = ({ currentRoom, player, setGameStatus }) => {
   }, [player]);
 
   const handleClick = (index) => {
-    if (!player || !gameStarted || board[index] || calculateWinner(board) || (player !== (xIsNext ? 'X' : 'O'))) return;
+    const IS_PLAYER_TURN = (player !== (xIsNext ? 'X' : 'O'))
+    if (!player || board[index] || calculateWinner(board) || !IS_PLAYER_TURN) return;
 
     const currentPlayer = xIsNext ? 'X' : 'O';
-    setBoard((prevBoard) => {
-      const newBoard = [...prevBoard];
-      newBoard[index] = currentPlayer;
-      return newBoard;
-    });
+
+    const newBoard = [...prevBoard];
+    newBoard[index] = currentPlayer;
+
     socket.emit('makeMove', currentRoom, { index, player: currentPlayer });
+
+    // set the board variable with the new board
+    setBoard(newBoard);
+
     setXIsNext(!xIsNext); // Toggle the turn
   };
 
