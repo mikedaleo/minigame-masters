@@ -232,14 +232,14 @@ header {
 
 /* Logo Image Styling */
 #logo img {
-  border-radius: 8px; /* Rounded corners for the logo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
 /* Hover Effect for Logo */
 #logo:hover img {
-  transform: scale(1.1); /* Slightly enlarge the logo on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Darker shadow on hover */
+  transform: scale(1.1); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 html, body, #root {
@@ -247,11 +247,7 @@ html, body, #root {
   margin: 0;
   display: flex;
   flex-direction: column;
-}
-
-/* Main Content Styling */
-.main-content {
-  flex: 1; /* Makes the content area flexible */
+  justify-content: space-between;
 }
 
 /* Footer Styling */
