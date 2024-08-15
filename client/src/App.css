@@ -125,3 +125,147 @@ footer{
   color: #007bff;
   font-weight: bold;
 }
+
+
+
+/* Navbar Styling */
+nav {
+  background-color: #000;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #333;
+}
+
+/* Container for Links */
+#links {
+  display: flex;
+  gap: 25px; /* Increased space between links */
+}
+
+/* Link Styling */
+#links a {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Link Hover Effect */
+#links a:hover {
+  background-color: #444;
+  color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+/* Link Active Effect */
+#links a.active {
+  color: #ffcc00; /* Gold color for active link */
+  border-bottom: 2px solid #ffcc00;
+  font-weight: bold;
+}
+
+/* Dropdown Arrow for Active Links (Optional) */
+#links a::after {
+  content: '▼';
+  font-size: 12px;
+  color: #f0f0f0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+/* Dropdown Arrow Rotation on Active */
+#links a.active::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #links {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+
+  #links a {
+    text-align: center;
+    padding: 12px;
+    border-radius: 0;
+    border-bottom: 1px solid #333;
+  }
+
+  #links a:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Header Styling */
+header {
+  background-color: #222; /* Dark background for the header */
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #333;
+}
+
+/* Logo Styling */
+#logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Logo Image Styling */
+#logo img {
+  border-radius: 8px; /* Rounded corners for the logo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+/* Hover Effect for Logo */
+#logo:hover img {
+  transform: scale(1.1); /* Slightly enlarge the logo on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Darker shadow on hover */
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex: 1; /* Makes the content area flexible */
+}
+
+/* Footer Styling */
+footer {
+  background-color: var(--grey); /* Dark background for the footer */
+  color: var(--high-contrast); /* Light text color for contrast */
+  padding: 20px 30px;
+  text-align: center;
+  border-top: 2px solid var(--contrast); /* Subtle border on top */
+}
+
+/* Footer Text Styling */
+footer p {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
