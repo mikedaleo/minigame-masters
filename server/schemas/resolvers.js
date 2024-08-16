@@ -1,5 +1,5 @@
 const { User } = require('../models'); // Import the models
-
+const { AuthenticationError, signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     getUser: async (parent, { _id }) => {
@@ -11,8 +11,9 @@ const resolvers = {
   },
   Mutation: {
     createUser: async (parent, { username, email, password }) => {
-      const user = new User({ username, email, password });
-      return await user.save(); // Create and save a new user
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user }; // Create and save a new user
     },
     updateCoins: async (parent, { userId, coins }) => {
       return User.findOneAndUpdate(
@@ -26,7 +27,22 @@ const resolvers = {
         }
       );
     },
-  },
+    login: async (parent, args) => {
+      const {username, password } = args;
+      const user = await User.findOne({ username });
+      if (!user) {
+        
+          throw AuthenticationError;
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+          throw AuthenticationError;
+      }
+      const token = signToken(user);
+      return { token, user };
+  }
+  
+}
 };
 
 module.exports = resolvers; // Export the resolvers
