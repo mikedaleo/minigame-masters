@@ -11,8 +11,8 @@ With minigame masters, you will create a profile with a username, email, and pas
 - [Features](#Features)
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [Screenshots] (#Screenshots)
-- [Prerequisites] (#Prerequisites)
+- [Screenshots](#Screenshots)
+- [Prerequisites](#Prerequisites)
 - [Contact](#contact)
 
 ## Features
