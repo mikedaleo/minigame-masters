@@ -1,0 +1,49 @@
+body {
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.card img {
+    width: 120px;
+    height: 65px;
+    border: 2px solid black;
+    object-fit: contain;
+}
+
+.reward-explanation {
+    margin-top: 20px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border: 2px solid lightgray;
+    border-radius: 8px;
+}
+
+.reward-explanation h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+.reward-explanation ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.reward-explanation li {
+    font-size: 16px;
+    color: #555;
+    padding: 5px 0;
+}

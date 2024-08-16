@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
 import Home from './pages/Home';
 import Games from './pages/Games';
+import SinglePlayerGames from './pages/SinglePlayerGames.jsx';
 import Profile from './pages/Profile';
 import Error from './pages/Error';
 import Leaderboard from './pages/Leaderboard';
@@ -21,6 +22,9 @@ const router = createBrowserRouter([
       }, {
         path: '/games',
         element: <Games />
+      }, {
+        path: '/single',
+        element: <SinglePlayerGames />
       }, {
         path: '/profile/:id',
         element: <Profile />
