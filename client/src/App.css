@@ -298,6 +298,10 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.btn:disabled {
+  text-decoration: line-through;
+}
+
 .winner {
   color: #28a745;
   font-weight: bold;

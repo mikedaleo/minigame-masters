@@ -11,48 +11,39 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer, setPlayerCount 
     });
 
     socket.on('roomCreated', (room) => {
-      setCurrentRoom(room);
-      setGameStatus(`Room ${room} created. Waiting for another player to join...`);
+      console.log(`room from server ${room}`)
+      joinRoom(room);
     });
 
-    socket.on('roomJoined', ({ room, playerCount }) => {
+    socket.on('roomJoined', (room) => {
       setCurrentRoom(room);
-      setPlayerCount(playerCount); // Set player count
-      if (playerCount === 2) {
-        setGameStatus('Game started!');
-      } else {
-        setGameStatus(`Joined room ${room}. Waiting for another player to join...`);
-      }
+      setGameStatus(`Joined room ${room}. Waiting for another player to join...`);
     });
 
     socket.on('roomError', (error) => {
       setGameStatus(error);
     });
 
-    socket.on('gameStart', () => {
-      setGameStatus('Game started!');
+    socket.on('gameReady', () => {
+      setGameStatus('Game Ready!');
     });
 
-    return () => {
-      socket.off('playerRole');
-      socket.off('roomCreated');
-      socket.off('roomJoined');
-      socket.off('roomError');
-      socket.off('gameStart');
-    };
-  }, [setCurrentRoom, setGameStatus, setPlayer, setPlayerCount]);
+    // return () => {
+    //   socket.off('playerRole');
+    //   socket.off('roomCreated');
+    //   socket.off('roomJoined');
+    //   socket.off('roomError');
+    //   socket.off('gameStart');
+    // };
+  }, []);
 
   const createRoom = () => {
-    console.log(roomName)
-    if (roomName) {
-      socket.emit('createRoom', roomName);
-    }
+    socket.emit('createRoom', roomName);
   };
 
-  const joinRoom = () => {
-    if (roomName) {
-      socket.emit('joinRoom', roomName);
-    }
+  const joinRoom = (room) => {
+    console.log(room)
+    socket.emit('joinRoom', room);
   };
 
   return (
@@ -65,8 +56,8 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer, setPlayerCount 
           placeholder="Enter room name"
         />
         <div>
-          <button onClick={createRoom} className='btn'>Create Room</button>
-          <button onClick={joinRoom} className='btn'>Join Room</button>
+          <button type="button" onClick={createRoom} className='btn' disabled={roomName ? '' : "disabled"}>Create Room</button>
+          <button type="button" onClick={() => joinRoom(roomName)} className='btn' disabled={roomName ? '' : "disabled"}>Join Room</button>
         </div>
       </div>
     </div>

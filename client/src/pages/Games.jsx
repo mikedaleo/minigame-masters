@@ -18,14 +18,14 @@ const Games = () => {
         setPlayer={setPlayer}
         setPlayerCount={setPlayerCount}
       />
-      {gameStatus === 'Game started!' ? (
+      {currentRoom && gameStatus === 'Game Ready!' ? (
         <Game
           currentRoom={currentRoom}
           player={player}
           setGameStatus={setGameStatus}
         />
       ) : (
-        <h3>{gameStatus}</h3>
+        <p>{gameStatus}</p>
       )}
     </div>
   );
