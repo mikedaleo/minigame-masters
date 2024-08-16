@@ -5,14 +5,20 @@ const typeDefs = `
     email: String!
     coins: Int!
   }
+  type Auth {
+  token: String!
+  user: User
+  }
 
   type Query {
     getUser(_id: ID!): User
     getUsers: [User]
   }
+    
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): User
+    login(username: String!, password: String!): Auth
+    createUser(username: String!, email: String!, password: String!): Auth
     updateCoins(userId: ID!, coins: Int!): User
   }
 `;
