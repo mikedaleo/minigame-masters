@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Auth from '../../utils/auth';
-// import { CREATE_USER } from '../../utils/mutations'
-// import { useMutation } from '@apollo/client';
+import { CREATE_USER, LOGIN_USER } from '../../utils/mutations'
+
+import { useMutation } from '@apollo/client';
 
 function SignUp() {
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
     const [currentForm, setCurrentForm] = useState('login');
-
-    // const [createUser, {error, data} ] = useMutation(CREATE_USER);
+    const [createUser] = useMutation(CREATE_USER);
+    const [login, { loading, data, error }] = useMutation(LOGIN_USER);
 
     const handleInputChange = (event) => {
       const { name, value } = event.target;
@@ -26,13 +27,17 @@ function SignUp() {
         
         try {
           const { data } = await createUser({
-            variables: { ...userFormData },
+            variables: { ...userFormData }
           });
-          console.log(data);
-          Auth.login(data.createUser.token);
+
+          if (data && data.createUser) {
+            console.log("User created:", data.createUser);
+            Auth.login(data.createUser.token);
+          } else {
+            console.error("Unexpected response:", data);
+          }
         } catch (error) {
-          console.error(error);
-          setShowAlert(true);
+          console.error("Signup error:", error);
         }
         setUserFormData({
           username: '',
@@ -50,20 +55,23 @@ function SignUp() {
           event.preventDefault();
           event.stopPropagation();
         }
-    
+        console.log(userFormData);
         try {
-          const response = await loginUser(userFormData);
-    
-          if (!response.ok) {
-            throw new Error('something went wrong!');
-          }
-    
-          const { token, user } = await response.json();
-          console.log(user);
-          Auth.login(token);
+          
+          const { data } = await login({
+            variables: { ...userFormData }
+            
+          })
+          console.log("data:", await login({
+            variables: { ...userFormData }
+            
+          }));
+          
+          console.log(data.login.token);
+          Auth.login(data.login.token);
         } catch (err) {
           console.error(err);
-          setShowAlert(true);
+          
         }
     
         setUserFormData({
@@ -105,9 +113,10 @@ function SignUp() {
                         <div className="form-container">
                             <form className='form login' onSubmit={handleLoginSubmit}>
                                 <h2>Login</h2>
+                                {error ? <p>{error.message}</p> : ''}
                                 <span>Login with Username</span>
-                                <input name="userName" type="username" placeholder='username'></input>
-                                <input name="password" type="password" placeholder='password'></input>
+                                <input name="username" type="username" placeholder='username' onChange={handleInputChange}></input>
+                                <input name="password" type="password" placeholder='password' onChange={handleInputChange}></input>
                                 <button type="submit" className='btn'>Login</button>
 
                             </form>
