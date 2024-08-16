@@ -14,13 +14,16 @@ const setupSocket = (server) => {
     console.log('New client connected');
 
     socket.on('createRoom', (roomName) => {
+      // Create a Room if it doesn't exist
       if (!rooms[roomName]) {
         rooms[roomName] = {
-          players: [], 
-          board: Array(9).fill(null),
-          playerRoles: {}
+          players: [],  // What goes in here?
+          board: Array(9).fill(null)
         };
+        // This is so you subscribe to the socket to the room
+        // handles events which get emit from the room 
         socket.join(roomName);
+
         io.to(socket.id).emit('roomCreated', roomName);
         console.log(`Room ${roomName} created`);
       } else {
@@ -29,25 +32,35 @@ const setupSocket = (server) => {
     });
 
     socket.on('joinRoom', (roomName) => {
-      if (rooms[roomName]) {
-        const room = rooms[roomName];
-        if (room.players.length < 2) {
-          room.players.push(socket.id);
-          socket.join(roomName);
-          socket.emit('roomJoined', roomName);
-          if (room.players.length === 2) {
-            const [player1, player2] = room.players;
-            io.to(player1).emit('playerRole', 'X');
-            io.to(player2).emit('playerRole', 'O');
-            io.to(roomName).emit('gameStart');
-          }
-          console.log(`Player joined room ${roomName}`);
-        } else {
-          socket.emit('roomError', 'Room is full');
-        }
-      } else {
-        socket.emit('roomError', 'Room does not exist');
+      // if the room exists
+      const gameData = rooms[roomName];
+      const ROOM_IS_FULL = gameData && gameData.players.length === 2;
+      const ROOM_IS_EMPTY = gameData && gameData.players.length === 0;
+      if (!gameData) {
+        socket.emit('roomError', 'Room does not exist')
+        return;
       }
+      if (ROOM_IS_FULL) {
+        socket.emit('roomError', 'Room is full');
+        return;
+      }
+      if (ROOM_IS_EMPTY) {
+        gameData.players.push(socket.id);
+        socket.emit('roomJoined', roomName);
+
+        console.log(`Player joined room ${roomName}`);
+        return;
+      }
+
+      gameData.players.push(socket.id);
+      socket.join(roomName);
+      socket.emit('roomJoined', roomName);
+
+      console.log(`Player joined room ${roomName}`);
+
+      io.to(roomName).emit('gameReady');
+
+      io.to(roomName).emit('gameStart', gameData.board);
     });
 
     socket.on('makeMove', (roomName, move) => {
@@ -56,7 +69,7 @@ const setupSocket = (server) => {
         if (rooms[roomName].board[index] === null) {
           rooms[roomName].board[index] = player;
           io.to(roomName).emit('moveMade', move);
-          
+
           // Check for a winner or draw
           const winner = calculateWinner(rooms[roomName].board);
           if (winner) {
@@ -75,7 +88,6 @@ const setupSocket = (server) => {
         const playerIndex = roomData.players.indexOf(socket.id);
         if (playerIndex !== -1) {
           roomData.players.splice(playerIndex, 1);
-          delete roomData.playerRoles[socket.id];
           if (roomData.players.length === 0) {
             delete rooms[roomName]; // Delete room if no players
           } else {
