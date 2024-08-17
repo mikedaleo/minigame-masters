@@ -33,7 +33,7 @@ const MatchingCardGame = () => {
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
   const [errors, setErrors] = useState(0);
-  const [units, setUnits] = useState(0);  
+  const [coins, setCoins] = useState(0);  
   const [currentGameUnits, setCurrentGameUnits] = useState(0); 
   const [gameOver, setGameOver] = useState(false);
 
@@ -115,7 +115,7 @@ const MatchingCardGame = () => {
     <div>
       <h2>Errors: {errors}</h2>
       <h2>Units Won: {currentGameUnits}</h2>
-      <h2>Total Units: {units}</h2>
+      <h2>Total Coins: {coins}</h2>
       <div id="board">
         {cards.map((card, index) => (
           <img
@@ -131,9 +131,9 @@ const MatchingCardGame = () => {
       {gameOver && (
         <>
           <h3>
-            Congratulations! You have finished the game with {errors} mistakes and earned {currentGameUnits} units.
+            Congratulations! You have finished the game with {errors} mistakes and earned {currentGameUnits} coins.
             <br />
-            You have won a total of {units} units so far.
+            You have won a total of {coins} coins so far.
           </h3>
           <button onClick={playAgain} style={{ padding: '10px 20px', fontSize: '16px', marginTop: '20px' }}>
             Play Again
@@ -143,13 +143,13 @@ const MatchingCardGame = () => {
 
       <div className="reward-explanation">
         <h3>Prize Structure</h3>
-        <p>You will earn units based on the number of mistakes you make:</p>
+        <p>You will earn coins based on the number of mistakes you make:</p>
         <ul>
-          <li>0 mistakes: 20 units</li>
-          <li>1-2 mistakes: 15 units</li>
-          <li>3-4 mistakes: 12 units</li>
-          <li>5-6 mistakes: 10 units</li>
-          <li>7+ mistakes: 5 units</li>
+          <li>0 mistakes: 20 coins</li>
+          <li>1-2 mistakes: 15 coins</li>
+          <li>3-4 mistakes: 12 coins</li>
+          <li>5-6 mistakes: 10 coins</li>
+          <li>7+ mistakes: 5 coins</li>
         </ul>
       </div>
     </div>
