@@ -40,7 +40,8 @@ input {
 }
 
 /* Buttons */
-.toggle-btn, .btn {
+.toggle-btn,
+.btn {
   background: linear-gradient(45deg, var(--secondary), #00aaff);
   color: var(--primary);
   padding: 10px 15px;
@@ -53,7 +54,8 @@ input {
   transition: all 0.3s ease;
 }
 
-.toggle-btn:hover, .btn:hover {
+.toggle-btn:hover,
+.btn:hover {
   background: linear-gradient(45deg, #00aaff, var(--secondary));
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -117,13 +119,21 @@ nav {
   width: 100%;
 }
 
-/* Links Styles */
-#links {
-  display: flex;
-  gap: 25px; /* Increased space between links */
+/* Table Style */
+
+table {
+  width: 50%;
+  margin: 0 auto;
 }
 
-#links a {
+/* Links Styles */
+.links {
+  display: flex;
+  gap: 25px;
+  /* Increased space between links */
+}
+
+.links a {
   color: #f0f0f0;
   text-decoration: none;
   font-size: 18px;
@@ -135,7 +145,7 @@ nav {
   position: relative;
 }
 
-#links a::before {
+.links a::before {
   content: '';
   position: absolute;
   left: 0;
@@ -148,24 +158,25 @@ nav {
   transition: transform 0.3s ease;
 }
 
-#links a:hover::before {
+.links a:hover::before {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-#links a:hover {
+.links a:hover {
   background-color: #444;
   color: #e0e0e0;
   transform: scale(1.05);
 }
 
-#links a.active {
-  color: #ffcc00; /* Gold color for active link */
+.links a.active {
+  color: #ffcc00;
+  /* Gold color for active link */
   border-bottom: 2px solid #ffcc00;
   font-weight: bold;
 }
 
-#links a::after {
+.links a::after {
   content: '▼';
   font-size: 12px;
   color: #f0f0f0;
@@ -175,7 +186,7 @@ nav {
   transition: transform 0.3s ease;
 }
 
-#links a.active::after {
+.links a.active::after {
   transform: translateY(-50%) rotate(180deg);
 }
 
@@ -184,25 +195,32 @@ nav {
   body {
     background: linear-gradient(90deg, rgba(18, 18, 18, 0.8), rgba(0, 243, 243, 0.8));
   }
+
   nav {
     flex-direction: column;
     align-items: stretch;
   }
 
-  #links {
+
+  table {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .links {
     flex-direction: column;
     gap: 15px;
     width: 100%;
   }
 
-  #links a {
+  .links a {
     text-align: center;
     padding: 12px;
     border-radius: 0;
     border-bottom: 1px solid #333;
   }
 
-  #links a:last-child {
+  .links a:last-child {
     border-bottom: none;
   }
 }
@@ -217,14 +235,16 @@ nav {
   border-bottom: 2px solid #333;
 }
 
+
 /* Container for Links */
-#links {
+.links {
   display: flex;
-  gap: 25px; /* Increased space between links */
+  gap: 25px;
+  /* Increased space between links */
 }
 
 /* Link Styling */
-#links a {
+.links a {
   color: #f0f0f0;
   text-decoration: none;
   font-size: 18px;
@@ -237,21 +257,22 @@ nav {
 }
 
 /* Link Hover Effect */
-#links a:hover {
+.links a:hover {
   background-color: #444;
   color: #e0e0e0;
   transform: scale(1.05);
 }
 
 /* Link Active Effect */
-#links a.active {
-  color: #ffcc00; /* Gold color for active link */
+.links a.active {
+  color: #ffcc00;
+  /* Gold color for active link */
   border-bottom: 2px solid #ffcc00;
   font-weight: bold;
 }
 
 /* Dropdown Arrow for Active Links (Optional) */
-#links a::after {
+.links a::after {
   content: '▼';
   font-size: 12px;
   color: #f0f0f0;
@@ -262,7 +283,7 @@ nav {
 }
 
 /* Dropdown Arrow Rotation on Active */
-#links a.active::after {
+.links a.active::after {
   transform: translateY(-50%) rotate(180deg);
 }
 
@@ -308,7 +329,9 @@ nav {
   font-weight: bold;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   display: flex;

@@ -6,7 +6,7 @@ const resolvers = {
       return await User.findById(_id); // Find user by ID
     },
     getUsers: async () => {
-      return await User.find(); // Get all users
+      return await User.find().sort({ coins: -1, username: 1}); // Get all users
     },
   },
   Mutation: {
@@ -19,7 +19,7 @@ const resolvers = {
       return User.findOneAndUpdate(
         {_id: userId },
         {
-          $addToSet: { coins: coins },
+          $set: { coins: coins },
         },
         {
           new: true,
