@@ -91,6 +91,35 @@ header {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   filter: brightness(1.1);
 }
+/* Coin Display Div */
+.coins-div{
+  position: fixed; 
+  top: 15px;       
+  right: 15px;     
+  display: flex;    
+  border: 2px solid var(--high-contrast); 
+  background-color: var(--grey);
+  border-radius: 8px;
+  box-shadow: black 5px 5px 5px;
+  padding: 5px 10px; 
+  z-index: 1000;   
+}
+.coins-div h2{
+  text-decoration: none;
+  color: var(--high-contrast)
+}
+@media (max-width: 767px) {
+  .coins-div{
+    position: relative;
+    top: 0px;       
+    right: 0px;
+    margin: 10px 0px;    
+  }
+  .coins-div h2{
+    text-decoration: none;
+    color: var(--high-contrast)
+  }
+}
 
 /* Footer Style */
 footer {

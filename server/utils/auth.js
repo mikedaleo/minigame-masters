@@ -35,8 +35,8 @@ authMiddleware: function ({ req }) {
   // return the request object so it can be passed to the resolver as `context`
   return req;
 },
-  signToken: function ({ username, email, _id }) {
-    const payload = { username, email, _id };
+  signToken: function ({ username, email, _id, coins }) {
+    const payload = { username, email, _id, coins };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };
