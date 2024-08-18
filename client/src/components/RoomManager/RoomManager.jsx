@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import socket from '../../socket';
 
-const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer, setPlayerCount }) => {
+const RoomManager = ({ setCurrentRoom, setGameStatus }) => {
   const [roomName, setRoomName] = useState('');
 
   useEffect(() => {
-    socket.on('playerRole', (role) => {
-      setPlayer(role);
-      setGameStatus(`You are player ${role}`);
-    });
 
     socket.on('roomCreated', (room) => {
       console.log(`room from server ${room}`)
@@ -27,14 +23,7 @@ const RoomManager = ({ setCurrentRoom, setGameStatus, setPlayer, setPlayerCount 
     socket.on('gameReady', () => {
       setGameStatus('Game Ready!');
     });
-
-    // return () => {
-    //   socket.off('playerRole');
-    //   socket.off('roomCreated');
-    //   socket.off('roomJoined');
-    //   socket.off('roomError');
-    //   socket.off('gameStart');
-    // };
+    
   }, []);
 
   const createRoom = () => {

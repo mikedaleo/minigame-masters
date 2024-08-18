@@ -323,6 +323,10 @@ nav {
   text-decoration: line-through;
 }
 
+.button:disabled {
+  background: red;
+}
+
 .winner {
   color: #28a745;
   font-weight: bold;

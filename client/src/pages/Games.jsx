@@ -5,9 +5,7 @@ import '../App.css'; // Import the CSS file
 
 const Games = () => {
   const [currentRoom, setCurrentRoom] = useState('');
-  const [player, setPlayer] = useState(null);
   const [gameStatus, setGameStatus] = useState('Enter a room to start playing...');
-  const [playerCount, setPlayerCount] = useState(0);
 
   return (
     <div>
@@ -15,14 +13,10 @@ const Games = () => {
       <RoomManager
         setCurrentRoom={setCurrentRoom}
         setGameStatus={setGameStatus}
-        setPlayer={setPlayer}
-        setPlayerCount={setPlayerCount}
       />
       {currentRoom && gameStatus === 'Game Ready!' ? (
         <Game
           currentRoom={currentRoom}
-          player={player}
-          setGameStatus={setGameStatus}
         />
       ) : (
         <p>{gameStatus}</p>
