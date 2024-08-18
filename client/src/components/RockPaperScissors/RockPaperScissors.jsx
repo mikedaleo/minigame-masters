@@ -33,7 +33,7 @@ const RockPaperScissors = () => {
       <h2>Rock, Paper, Scissors</h2>
       <div className="choices">
         {choices.map((choice) => (
-          <button key={choice} onClick={() => handleClick(choice)}>
+          <button className="btn"key={choice} onClick={() => handleClick(choice)}>
             {choice}
           </button>
         ))}

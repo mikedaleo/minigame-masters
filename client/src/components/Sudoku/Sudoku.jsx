@@ -57,7 +57,7 @@ const Sudoku = () => {
           </div>
         ))}
       </div>
-      <button className="check-button" onClick={() => alert(checkValid() ? 'Valid Sudoku!' : 'Invalid Sudoku.')}>
+      <button className="check-button btn" onClick={() => alert(checkValid() ? 'Valid Sudoku!' : 'Invalid Sudoku.')}>
         Check Sudoku
       </button>
     </div>

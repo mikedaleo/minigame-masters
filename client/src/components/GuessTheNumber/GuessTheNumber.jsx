@@ -41,7 +41,7 @@ const GuessTheNumber = () => {
           onChange={(e) => setGuess(e.target.value)}
           placeholder="Enter a number between 1 and 100"
         />
-        <button type="submit">Submit Guess</button>
+        <button className="btn" type="submit">Submit Guess</button>
       </form>
       <p>{message}</p>
     </div>
