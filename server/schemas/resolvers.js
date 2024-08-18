@@ -19,7 +19,7 @@ const resolvers = {
       return User.findOneAndUpdate(
         {_id: userId },
         {
-          $set: { coins: coins },
+          $inc: { coins: 10 },
         },
         {
           new: true,
