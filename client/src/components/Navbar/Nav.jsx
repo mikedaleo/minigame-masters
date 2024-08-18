@@ -19,11 +19,10 @@ function Nav() {
 
         {Auth.loggedIn() ? (
           <>
-            <Link to={`/profile/${Auth.getProfile().data._id}`}>{Auth.getProfile().data.username}</Link>
             <Link onClick={Auth.logout}>Logout</Link>
           </>
-
-        ) : (<Link to="/signup" className={isActive('/signup') ? 'active' : ''}>Sign Up</Link>)}
+          )
+          : (<Link to="/signup" className={isActive('/signup') ? 'active' : ''}>Sign Up/Login</Link>)}
 
       </div>
     </nav>

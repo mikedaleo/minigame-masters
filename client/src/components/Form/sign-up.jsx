@@ -96,9 +96,15 @@ function SignUp() {
                             <form className='form sign-up' onSubmit={handleSignupSubmit}>
                                 <h2>Create Account</h2>
                                 <span>Register with E-mail</span>
-                                <input value={userFormData.email} onChange={handleInputChange} name="email" type="email" placeholder='email'></input>
-                                <input value={userFormData.username} onChange={handleInputChange} name="username" type="username" placeholder='username'></input>
-                                <input value={userFormData.password} onChange={handleInputChange} name="password" type="password" placeholder='password'></input>
+                                <input 
+                                value={userFormData.email || ""} 
+                                onChange={handleInputChange} 
+                                name="email" 
+                                type="email" 
+                                placeholder='email'>
+                                </input>
+                                <input value={userFormData.username || ""} onChange={handleInputChange} name="username" type="username" placeholder='username'></input>
+                                <input value={userFormData.password || ""} onChange={handleInputChange} name="password" type="password" placeholder='password'></input>
                                 <button type="submit" className='btn' disabled={!(userFormData.username && userFormData.email && userFormData.password)}>Sign Up</button>
                             </form>
                         </div>
@@ -115,8 +121,8 @@ function SignUp() {
                                 <h2>Login</h2>
                                 {error ? <p>{error.message}</p> : ''}
                                 <span>Login with Username</span>
-                                <input name="username" type="username" placeholder='username' onChange={handleInputChange}></input>
-                                <input name="password" type="password" placeholder='password' onChange={handleInputChange}></input>
+                                <input value={userFormData.username || ''} name="username" type="username" placeholder='username' onChange={handleInputChange}></input>
+                                <input value={userFormData.password || ''} name="password" type="password" placeholder='password' onChange={handleInputChange}></input>
                                 <button type="submit" className='btn'>Login</button>
 
                             </form>
