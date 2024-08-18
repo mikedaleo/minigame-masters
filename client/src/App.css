@@ -342,3 +342,29 @@ body,
   flex-direction: column;
   justify-content: space-between;
 }
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.home-section {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+}
+
+.home-title {
+  font-family: 'Arial', sans-serif; /* Clean and modern font */
+  font-size: 1.8em; /* Larger font size */
+  color: #333; /* Dark color for contrast */
+  line-height: 1.4; /* Improved readability */
+  margin: 0;
+  padding: 0;
+}
