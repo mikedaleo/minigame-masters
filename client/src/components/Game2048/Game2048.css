@@ -1,0 +1,63 @@
+/* Game2048.css */
+
+/* Container for the entire game board */
+.game-2048-container {
+    display: grid;
+    grid-template-columns: repeat(4, 100px); /* 4 columns, each 100px wide */
+    grid-template-rows: repeat(4, 100px);    /* 4 rows, each 100px high */
+    gap: 10px;                              /* Space between cells */
+    margin: 20px auto;
+    width: fit-content;
+    background-color: #bbada0;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  /* Each cell of the game board */
+  .game-2048-cell {
+    width: 100px;
+    height: 100px;
+    background-color: #eee4da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #776e65;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border do not affect the width/height */
+    position: absolute;     /* Allows for smooth transition effects */
+    transition: transform 0.4s ease-out, background-color 0.4s ease-out; /* Slower and more noticeable transitions */
+  }
+  
+  /* Specific styles for different tile values */
+  .game-2048-cell-2 { background-color: #eee4da; }
+  .game-2048-cell-4 { background-color: #ede0c8; }
+  .game-2048-cell-8 { background-color: #f2b179; color: white; }
+  .game-2048-cell-16 { background-color: #f59563; color: white; }
+  .game-2048-cell-32 { background-color: #f67c5f; color: white; }
+  .game-2048-cell-64 { background-color: #f65e3b; color: white; }
+  .game-2048-cell-128 { background-color: #edcf72; color: white; }
+  .game-2048-cell-256 { background-color: #edcc61; color: white; }
+  .game-2048-cell-512 { background-color: #edc850; color: white; }
+  .game-2048-cell-1024 { background-color: #edc53f; color: white; }
+  .game-2048-cell-2048 { background-color: #edc22e; color: white; }
+  
+  /* Status message */
+  .game-2048-status {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  
+  
+  
