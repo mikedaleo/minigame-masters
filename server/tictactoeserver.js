@@ -17,7 +17,7 @@ const setupSocket = (server) => {
       // Create a Room if it doesn't exist
       if (!rooms[roomName]) {
         rooms[roomName] = {
-          players: [],  // What goes in here?
+          players: [],  // socket id's
           board: Array(9).fill(null)
         };
         // This is so you subscribe to the socket to the room
@@ -45,41 +45,46 @@ const setupSocket = (server) => {
         return;
       }
       if (ROOM_IS_EMPTY) {
-        gameData.players.push(socket.id);
+        gameData.players.push({
+          id: socket.id,
+          role: 'X'
+        }
+        );
         socket.emit('roomJoined', roomName);
 
         console.log(`Player joined room ${roomName}`);
         return;
       }
 
-      gameData.players.push(socket.id);
+      gameData.players.push({
+        id: socket.id,
+        role: 'O'
+      }
+      );
       socket.join(roomName);
       socket.emit('roomJoined', roomName);
 
       console.log(`Player joined room ${roomName}`);
+      console.log(gameData);
 
       io.to(roomName).emit('gameReady');
 
-      io.to(roomName).emit('gameStart', gameData.board);
+      io.to(roomName).emit('gameStart', gameData);
     });
 
-    socket.on('makeMove', (roomName, move) => {
-      if (rooms[roomName] && rooms[roomName].players.includes(socket.id)) {
-        const { index, player } = move;
-        if (rooms[roomName].board[index] === null) {
-          rooms[roomName].board[index] = player;
-          io.to(roomName).emit('moveMade', move);
+    socket.on('makeMove', ( newBoard, id, currentRoom ) => {
+          io.to(currentRoom).emit('moveMade', newBoard, id);
+          console.log(currentRoom)
 
           // Check for a winner or draw
-          const winner = calculateWinner(rooms[roomName].board);
+          const winner = calculateWinner(newBoard);
           if (winner) {
-            io.to(roomName).emit('gameOver', { winner });
-          } else if (rooms[roomName].board.every(cell => cell !== null)) {
-            io.to(roomName).emit('gameOver', { winner: 'Draw' });
+            io.to(currentRoom).emit('gameOver', { winner });
+          } else if (newBoard.every(cell => cell !== null)) {
+            io.to(currentRoom).emit('gameOver', { winner: 'Draw' });
           }
         }
-      }
-    });
+    );
 
     socket.on('disconnect', () => {
       console.log('Client disconnected');
