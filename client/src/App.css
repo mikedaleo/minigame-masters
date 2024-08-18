@@ -353,7 +353,7 @@ nav {
 }
 
 .button:disabled {
-  background: red;
+  background: lightgray;
 }
 
 .winner {

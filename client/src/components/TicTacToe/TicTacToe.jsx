@@ -5,6 +5,8 @@ const TicTacToe = ({ currentRoom }) => {
   const [board, setBoard] = useState(null);
   const [isTurn, setIsTurn] = useState(false);
   const [role, setRole] = useState('');
+  const [gameResult, setGameResult] = useState(null);
+
 
   useEffect(() => {
 
@@ -22,6 +24,7 @@ const TicTacToe = ({ currentRoom }) => {
         setIsTurn(true);
       });
       localStorage.setItem('players', JSON.stringify(gameData.players))
+      setGameResult(null); // Reset game result on new game start
       setBoard(gameData.board);
     });
 
@@ -37,9 +40,18 @@ const TicTacToe = ({ currentRoom }) => {
         setBoard(newBoard);
       });
     });
+
+    socket.on('gameOver', (result) => {
+      setGameResult(result.winner);
+    });
   }, []);
 
+  
+
   const handleClick = (index) => {
+    if (gameResult || !isTurn) { // Don't allow moves if the game is over
+      return;
+    }
     const newBoard = [...board];
     if (newBoard[index] !== null) {
       return
@@ -52,17 +64,12 @@ const TicTacToe = ({ currentRoom }) => {
     setIsTurn(false);
     setBoard(newBoard);
 
-    // const currentPlayer = xIsNext ? 'X' : 'O';
-
-    // const newBoard = [...board];
-    // newBoard[index] = currentPlayer;
-
-    // socket.emit('makeMove', currentRoom, { index, player: currentPlayer });
-
-    // // set the board variable with the new board
-    // setBoard(newBoard);
-
-    // setXIsNext(!xIsNext); // Toggle the turn
+    const winner = calculateWinner(newBoard);
+    if (winner) {
+      setGameResult(winner);
+    } else if (newBoard.every(cell => cell !== null)) {
+      setGameResult('Draw');
+    }
   };
 
   const calculateWinner = (squares) => {
@@ -89,6 +96,11 @@ const TicTacToe = ({ currentRoom }) => {
 
   return (
     <div>
+       {gameResult && (
+      <div className="gameResult">
+        <h2>{gameResult === 'Draw' ? 'It\'s a Draw!' : `Player ${gameResult} Wins!`}</h2>
+      </div>
+    )}
       <div className="board">
         {board ? board.map((value, index) => (
           <button
