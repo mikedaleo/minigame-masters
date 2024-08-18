@@ -15,11 +15,8 @@ export const CREATE_USER = gql`
 export const UPDATE_COINS = gql`
     mutation updateCoins($userId: ID!, $coins: Int!) {
         updateCoins(userId: $userId, coins: $coins) {
-            user {
                 _id
-                username
                 coins
-            }
         }
     }
     
