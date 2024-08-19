@@ -6,25 +6,16 @@ import { useQuery } from '@apollo/client';
 import { GET_USER } from '../../utils/queries';
 
 function Header() {
-
-<<<<<<< HEAD
-  
-  return (
-    <header>
-=======
   if (Auth.loggedIn()) {
     const { loading, error, data } = useQuery(GET_USER, {
       variables: { _id: Auth.getProfile().data._id },
     });
-  
     if (loading) return <p>Loading...</p>;
     if (error) {
       return <p>Error: {error.message}</p>;
     }
-  
     const user = data.getUser;
     return (<header>
->>>>>>> 21e7f9f9d37fe59ac8903bd36bc40f4660390a5b
       <Link to="/" id="logo">
         <img src="/logo.png" alt="Minigame Masters Logo" />
       </Link>
@@ -50,9 +41,5 @@ function Header() {
       </header>
     );
   }
-
-
-
 }
-
 export default Header;
