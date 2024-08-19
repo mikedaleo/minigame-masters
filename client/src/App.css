@@ -104,6 +104,15 @@ header {
   padding: 5px 10px; 
   z-index: 1000;   
 }
+.profile-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-coins{
+  display: flex;
+  align-items: center;
+}
 .coins-div h2{
   text-decoration: none;
   color: var(--high-contrast)
