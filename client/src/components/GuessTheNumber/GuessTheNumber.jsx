@@ -1,10 +1,14 @@
 // GuessTheNumber.js
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_COINS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const GuessTheNumber = () => {
   const [targetNumber, setTargetNumber] = useState(generateRandomNumber());
   const [guess, setGuess] = useState('');
   const [message, setMessage] = useState('');
+  const [updateCoins] = useMutation(UPDATE_COINS);
 
   function generateRandomNumber() {
     return Math.floor(Math.random() * 100) + 1;
@@ -21,6 +25,18 @@ const GuessTheNumber = () => {
 
     if (numGuess === targetNumber) {
       setMessage('Congratulations! You guessed the number!');
+      
+      try {
+         updateCoins({
+          variables: {
+            userId: Auth.getProfile().data._id,
+            coins: Auth.getProfile().data.coins,
+          },
+        });
+      } catch (error) {
+        console.error('Error updating coins:', error);
+      }
+
       // Reset the game
       setTargetNumber(generateRandomNumber());
       setGuess('');
