@@ -21,7 +21,7 @@ With minigame masters, you will create a profile with a username, email, and pas
 - **Feature 2**: Create a Profile on sign up page with a username, email, and password.
 - **Feature 3**: Multiplayer page gives you selection of multiplayer games. You can create game rooms and give that name to a friend so they can join the game and play with you.
 - **Feature 4**: Single Player page give you a selection of single player games
-- **Feature 5**: Earn coins by playing games. Wager coins in multiplayer games.
+- **Feature 5**: Earn coins by playing games. 
 - **Feature 6**: Leaderboards show where you rank in relation to other users based on number of coins you have.
 - **Feature 7**: On your profile page, see all your login information plus all of your coins you have earned from playing games.
 
@@ -34,14 +34,14 @@ With minigame masters, you will create a profile with a username, email, and pas
 To use minigame-masters, go to this link: https://minigame-masters.onrender.com/
 
 ## Screenshots
-![Landing Page](client/public/MinigameLandingPage.png)
-![Logged In](client/public/MinigameLoggedIn.png) 
-![Tic Tac Toe](client/public/MinigameTiclandingscreen.png) 
-![Single Player](client/public/MinigameSingleGames.png) 
-![Sudoku](client/public/MinigameSudoku.png) 
-![Matching](client/public/MatchingMinigame.png)  
-![Matching Coins](client/public/MatchingCoins.png)
-![Leaderboard](client/public/MinigameLeaderboard.png) 
+![Landing Page](client/public/Minigame-Landing-Page.png)
+![Logged In](client/public/Minigame-Logged-In.png) 
+![Tic Tac Toe](client/public/Minigame-Tic-landing-screen.png) 
+![Single Player](client/public/Minigame-Single-Games.png) 
+![Sudoku](client/public/Minigame-Sudoku.png) 
+![Matching](client/public/Matching-Minigame.png)  
+![Matching Coins](client/public/Matching-Coins.png)
+![Leaderboard](client/public/Minigame-Leaderboard.png) 
 
 
 
