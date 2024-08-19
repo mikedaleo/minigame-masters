@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import socket from '../../socket';
+import { useMutation } from '@apollo/client';
+import { UPDATE_COINS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
+
 
 const TicTacToe = ({ currentRoom }) => {
   const [board, setBoard] = useState(null);
   const [isTurn, setIsTurn] = useState(false);
   const [role, setRole] = useState('');
   const [gameResult, setGameResult] = useState(null);
+  const [updateCoins] = useMutation(UPDATE_COINS);
 
 
   useEffect(() => {
@@ -46,7 +51,7 @@ const TicTacToe = ({ currentRoom }) => {
     });
   }, []);
 
-  
+
 
   const handleClick = (index) => {
     if (gameResult || !isTurn) { // Don't allow moves if the game is over
@@ -67,6 +72,25 @@ const TicTacToe = ({ currentRoom }) => {
     const winner = calculateWinner(newBoard);
     if (winner) {
       setGameResult(winner);
+
+      console.log(winner);
+
+      if (winner === role){
+        
+        console.log(Auth.getProfile().data);
+        try {
+           updateCoins({
+            variables: {
+              userId: Auth.getProfile().data._id,
+              coins: Auth.getProfile().data.coins,
+            },
+          });
+        } catch (error) {
+          console.error('Error updating coins:', error);
+        }
+
+      }
+
     } else if (newBoard.every(cell => cell !== null)) {
       setGameResult('Draw');
     }
@@ -96,11 +120,11 @@ const TicTacToe = ({ currentRoom }) => {
 
   return (
     <div>
-       {gameResult && (
-      <div className="gameResult">
-        <h2>{gameResult === 'Draw' ? 'It\'s a Draw!' : `Player ${gameResult} Wins!`}</h2>
-      </div>
-    )}
+      {gameResult && (
+        <div className="gameResult">
+          <h2>{gameResult === 'Draw' ? 'It\'s a Draw!' : `Player ${gameResult} Wins!`}</h2>
+        </div>
+      )}
       <div className="board">
         {board ? board.map((value, index) => (
           <button
