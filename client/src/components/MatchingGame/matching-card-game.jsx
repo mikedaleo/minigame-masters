@@ -13,6 +13,9 @@ import mahomesImage from './mahomes.jpg';
 import kelceImage from './kelce.jpg';
 import jonesImage from './jones.jpg';
 import nabersImage from './nabers.jpg';
+import { useMutation } from '@apollo/client';
+import { UPDATE_COINS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const initialCards = [
     { name: "Dak Prescott", imgSrc: dakImage, pairId: 1 },
@@ -34,8 +37,9 @@ const MatchingCardGame = () => {
   const [flippedCards, setFlippedCards] = useState([]);
   const [errors, setErrors] = useState(0);
   const [coins, setCoins] = useState(0);  
-  const [currentGameUnits, setCurrentGameUnits] = useState(0); 
+  const [currentGameCoins, setCurrentGameCoins] = useState(0); 
   const [gameOver, setGameOver] = useState(false);
+  const [updateCoins] = useMutation(UPDATE_COINS);
 
   useEffect(() => {
     shuffleCards();
@@ -52,7 +56,7 @@ const MatchingCardGame = () => {
     setGameOver(false);
     setFlippedCards([]);
     setErrors(0);
-    setCurrentGameUnits(0); 
+    setCurrentGameCoins(0); 
   };
 
   const selectCard = (index) => {
@@ -89,21 +93,36 @@ const MatchingCardGame = () => {
     }
   };
 
+  const updateCoinsFunction = async () => {
+    try {
+      await updateCoins({
+        variables: {
+          userId: Auth.getProfile().data._id,
+          coins: Auth.getProfile().data.coins,
+        },
+      });
+    } catch (error) {
+      console.error('Error updating coins:', error);
+    }
+  }
+
   const calculateReward = () => {
     let reward = 0;
-    if (errors === 0) {
+    if (errors <= 1) {
+      updateCoinsFunction();
+      updateCoinsFunction();
+      updateCoinsFunction();
+      reward = 30;
+    } else if (errors <= 5) {
+      updateCoinsFunction();
+      updateCoinsFunction();
       reward = 20;
-    } else if (errors <= 2) {
-      reward = 15;
-    } else if (errors <= 4) {
-      reward = 12;
-    } else if (errors <= 6) {
-      reward = 10;
     } else {
-      reward = 5;
+      updateCoinsFunction();
+      reward = 10;
     }
-    setCurrentGameUnits(reward); 
-    setUnits(prevUnits => prevUnits + reward);
+    setCurrentGameCoins(reward); 
+    setCoins(prevCoins => prevCoins + reward);
   };
 
   const playAgain = () => {
@@ -114,7 +133,7 @@ const MatchingCardGame = () => {
   return (
     <div>
       <h2>Errors: {errors}</h2>
-      <h2>Units Won: {currentGameUnits}</h2>
+      <h2>Coins Won: {currentGameCoins}</h2>
       <h2>Total Coins: {coins}</h2>
       <div id="board">
         {cards.map((card, index) => (
@@ -131,7 +150,7 @@ const MatchingCardGame = () => {
       {gameOver && (
         <>
           <h3>
-            Congratulations! You have finished the game with {errors} mistakes and earned {currentGameUnits} coins.
+            Congratulations! You have finished the game with {errors} mistakes and earned {currentGameCoins} coins.
             <br />
             You have won a total of {coins} coins so far.
           </h3>
@@ -145,11 +164,9 @@ const MatchingCardGame = () => {
         <h3>Prize Structure</h3>
         <p>You will earn coins based on the number of mistakes you make:</p>
         <ul>
-          <li>0 mistakes: 20 coins</li>
-          <li>1-2 mistakes: 15 coins</li>
-          <li>3-4 mistakes: 12 coins</li>
-          <li>5-6 mistakes: 10 coins</li>
-          <li>7+ mistakes: 5 coins</li>
+          <li>0-1 mistakes: 30 coins</li>
+          <li>2-5 mistakes: 20 coins</li>
+          <li>6+ mistakes: 10 coins</li>
         </ul>
       </div>
     </div>
