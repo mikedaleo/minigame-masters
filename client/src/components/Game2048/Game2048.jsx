@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Game2048.css';
+import { useMutation } from '@apollo/client';
+import { UPDATE_COINS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const getRandomPosition = () => Math.floor(Math.random() * 4);
 
@@ -56,6 +59,8 @@ const checkWin = (board) => board.flat().includes(2048);
 const Game2048 = () => {
   const [board, setBoard] = useState(initializeBoard());
   const [gameStatus, setGameStatus] = useState('ongoing');
+  const [updateCoins] = useMutation(UPDATE_COINS);
+
 
   const handleKeyDown = (e) => {
     let newBoard;
@@ -94,27 +99,43 @@ const Game2048 = () => {
 
   const renderStatusMessage = () => {
     if (gameStatus === 'won') {
+      try {
+        updateCoins({
+         variables: {
+           userId: Auth.getProfile().data._id,
+           coins: Auth.getProfile().data.coins,
+         },
+       });
+     } catch (error) {
+       console.error('Error updating coins:', error);
+     }
+  
       return <div className="game-2048-status">You Win!</div>;
     }
     return null;
   };
 
   return (
-    <div className="game-2048-container">
-      {board.map((row, rowIndex) => (
-        row.map((cell, cellIndex) => (
-          <div
-            key={`${rowIndex}-${cellIndex}`}
-            className={`game-2048-cell game-2048-cell-${cell}`}
-            style={{
-              transform: `translate(${cellIndex * 110}px, ${rowIndex * 110}px)`,
-            }}
-          >
-            {cell !== 0 ? cell : ''}
-          </div>
-        ))
-      ))}
-      {renderStatusMessage()}
+    <div>
+      <h2>Use Arrow Keys to Play</h2>
+      <div className="game-2048-container">
+
+        {board.map((row, rowIndex) => (
+          row.map((cell, cellIndex) => (
+            <div
+              key={`${rowIndex}-${cellIndex}`}
+              className={`game-2048-cell game-2048-cell-${cell}`}
+              style={{
+                transform: `translate(${cellIndex * 110}px, ${rowIndex * 110}px)`,
+              }}
+            >
+              {cell !== 0 ? cell : ''}
+            </div>
+          ))
+        ))}
+        {renderStatusMessage()}
+
+      </div>
     </div>
   );
 };

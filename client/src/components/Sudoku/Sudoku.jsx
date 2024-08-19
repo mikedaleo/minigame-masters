@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-
+import { useMutation } from '@apollo/client';
+import { UPDATE_COINS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 // Define the initial grid with some pre-filled values
-const initialGrid = [
+let initialGrid = [
   [1, 0, 0, 4],
   [0, 2, 0, 0],
   [0, 0, 0, 0],
@@ -11,6 +13,7 @@ const initialGrid = [
 
 const Sudoku = () => {
   const [grid, setGrid] = useState(initialGrid);
+  const [updateCoins] = useMutation(UPDATE_COINS);
 
   const handleChange = (row, col, value) => {
     // Ensure only valid numbers (1-4) are entered and handle read-only cells
@@ -34,12 +37,24 @@ const Sudoku = () => {
         return false;
       }
     }
+    try {
+      updateCoins({
+       variables: {
+         userId: Auth.getProfile().data._id,
+         coins: Auth.getProfile().data.coins,
+       },
+     });
+   } catch (error) {
+     console.error('Error updating coins:', error);
+   }
+
 
     return true;
   };
 
   return (
     <div className="sudoku">
+      <h2>Complete The 4x4 Sudoku</h2>
       <div className="sudoku-container">
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="sudoku-row">
