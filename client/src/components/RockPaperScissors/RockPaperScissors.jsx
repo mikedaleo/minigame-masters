@@ -36,7 +36,7 @@ const RockPaperScissors = ({ userId }) => {
     setResult(gameResult);
 
     if (gameResult === 'You Win') {
-      console.log(Auth.getProfile().data);
+      
       try {
         await updateCoins({
           variables: {
