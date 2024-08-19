@@ -51,7 +51,7 @@ function SinglePlayerGames() {
           className={`game-button ${activeGame === 'wordle' ? 'active' : ''}`} // New button for 2048 game
           onClick={() => handleGameChange('wordle')}
         >
-          Worlde
+          Wordle
         </button>
       </div>
 
